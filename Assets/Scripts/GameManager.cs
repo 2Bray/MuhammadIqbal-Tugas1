@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
@@ -18,10 +18,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public TextMeshProUGUI ScoreUI;
     public Transform EndLine;
 
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private UImanager uiManager;
     [SerializeField] private SpawnParent enemyPrt;
     [SerializeField] private SpawnParent bluePrt;
     [SerializeField] private SpawnParent buffPrt;
@@ -52,17 +52,21 @@ public class GameManager : MonoBehaviour
         timer += Time.deltaTime;
 
         //Membuka Wave
-        if (openWave && timer > 10)
+        if (openWave)
         {
-            openWave = false;
-            StartCoroutine(spawnManager(0));
-        }
-    }
+            uiManager.StartCountDown(timer);
 
-    private void FixedUpdate()
-    {
+            if (timer > 10)
+            {
+                openWave = false;
+                StartCoroutine(spawnManager(0));
+
+                uiManager.StartCountDown(timer);
+            }
+        }
         //Raycast untuk mendeteksi input player
-        if (Input.GetMouseButton(0))
+        //Input Player Jgn Di Fixed Update Karena Harus Di Eksekusi Sesegera Mungkin
+        if (Input.GetMouseButtonDown(0))
         {
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
@@ -99,12 +103,13 @@ public class GameManager : MonoBehaviour
 
     public int GetHeart() => heart;
     public int GetLvl() => lvl;
+    public bool getGameOver() => gameOver;
 
     public void AddScore()
     {
         score += 10;
 
-        ScoreUI.text = "Score : " + score;
+        uiManager.UpdateScore(score);
     }
 
     private IEnumerator spawnManager(int count)
@@ -135,10 +140,9 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         gameOver = true;
-        gameOverPanel.SetActive(true);
         heartUI.gameObject.SetActive(false);
+        uiManager.SetGameOverPanel();
     }
 
-    public bool getGameOver() => gameOver;
 
 }

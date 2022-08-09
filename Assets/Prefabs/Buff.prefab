@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2641257972920591455}
   - component: {fileID: 1382415007806466443}
   - component: {fileID: 3439781356500825807}
-  - component: {fileID: -1517182202422794738}
+  - component: {fileID: 254944219046543019}
   m_Layer: 0
   m_Name: Buff
   m_TagString: Buff
@@ -124,7 +124,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-1517182202422794738
+--- !u!114 &254944219046543019
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,6 +133,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 5327778742234833082}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 511634871368c034ab05283a77c31344, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ec149785acd36e418eb00c3c07029c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
