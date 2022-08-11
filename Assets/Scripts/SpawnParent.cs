@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class SpawnParent : MonoBehaviour
 {
+    [SerializeField] private GameObject childPrefabs;
+    [SerializeField] private int poolSize;
     private List<GameObject> child;
 
     void Start()
     {
         child = new List<GameObject>();
-        for (int i=0; i<transform.childCount; i++)
+
+        for (int i=0; i<poolSize; i++)
         {
-            child.Add(transform.GetChild(i).gameObject);
+            InstantiatePoolObj();
         }
     }
 
+    //Menspawn Object Dari Pool
     public void SpawnChild()
     {
         foreach (GameObject go in child)
@@ -22,8 +26,20 @@ public class SpawnParent : MonoBehaviour
             if (!go.activeInHierarchy) 
             { 
                 go.GetComponent<ObjController>().Spawn();
-                break;
+                return;
             }
         }
+
+        //Jika Seluruh Obj Di Pool Aktif
+        InstantiatePoolObj();
+        child[child.Count - 1].SetActive(true);
+    }
+
+    private void InstantiatePoolObj()
+    {
+        GameObject obj = Instantiate(childPrefabs, transform);
+        obj.GetComponent<ObjController>().Spawn();
+        child.Add(obj);
+        obj.SetActive(false);
     }
 }

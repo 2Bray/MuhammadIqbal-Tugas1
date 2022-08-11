@@ -6,20 +6,10 @@ public class BuffController : ObjController
 {
     //Child ObjController
 
+
+    public delegate void BuffDelegate();
+    public static event BuffDelegate OnBuffHit;
+
     //Menambah Jumlah Hati Jika Di Klick
-    public override void Death()
-    {
-        if (GameManager.Instance.getGameOver()) return;
-
-        GameManager.Instance.SetHeart(1);
-
-        gameObject.SetActive(false);
-        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-    }
-
-    public override void Finish()
-    {
-        gameObject.SetActive(false);
-        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-    }
+    public override void Death() => OnBuffHit();
 }

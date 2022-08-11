@@ -6,20 +6,10 @@ public class BlueController : ObjController
 {
     //Child ObjController
 
+
+    public delegate void BlueDelegate();
+    public static event BlueDelegate OnBlueHit;
+
     //Game Over Ketika Di Klick
-    public override void Death()
-    {
-        if (GameManager.Instance.getGameOver()) return;
-
-        GameManager.Instance.GameOver();
-
-        gameObject.SetActive(false);
-        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-    }
-
-    public override void Finish()
-    {
-        gameObject.SetActive(false);
-        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-    }
+    public override void Death() => OnBlueHit();
 }

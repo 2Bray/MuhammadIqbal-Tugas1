@@ -12,12 +12,7 @@ public class ButtonScript : MonoBehaviour
     //Mengisi On Click Event Di Dalam Script
     private void Start()
     {
-        quit.onClick.AddListener(ExitGame);
+        quit.onClick.AddListener( ()=> Application.Quit());
         restart.onClick.AddListener( () => SceneManager.LoadScene("GamePlay") );
-    }
-
-    public void ExitGame()
-    {
-        Application.Quit();
     }
 }
