@@ -4,24 +4,9 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    private bool gameOver = false;
-
-    private void OnEnable()
-    {
-        GameManager.OnGameOver += setGameOver;
-    }
-
-    private void OnDisable()
-    {
-        GameManager.OnGameOver -= setGameOver;
-        
-    }
-
-    private void setGameOver() => gameOver = true;
-
     private void Update()
     {
-        if (gameOver) return;
+        if (GameManager.Instance.GetGameOver) return;
 
         //Raycast untuk mendeteksi input player
         //Input Player Jgn Di Fixed Update Karena Harus Di Eksekusi Sesegera Mungkin

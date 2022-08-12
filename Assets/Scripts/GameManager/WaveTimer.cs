@@ -20,42 +20,41 @@ public class WaveTimer : MonoBehaviour
 
     private float timer;
     private bool openWave;
-    private bool gameOver;
     private int lvl;
 
     private void OnEnable()
     {
         GameManager.OnGameStart += OnGameStart;
         GameManager.OnLvlIncrease += OnLvlChange;
-        GameManager.OnGameOver += OnGameOver;
     }
 
     private void OnDisable()
     {
         GameManager.OnGameStart -= OnGameStart;
         GameManager.OnLvlIncrease -= OnLvlChange;
-        GameManager.OnGameOver -= OnGameOver;
     }
 
     private void OnGameStart()
     {
         timer = 7; //Pada saat start player memiliki 3 detik untuk memulai
         openWave = true;
-        gameOver = false;
     }
 
     private void OnLvlChange(int value) => lvl = value;
-    private void OnGameOver() => gameOver = true;
 
     private void Update()
     {
-        if (gameOver) return;
-
         timer += Time.deltaTime;
 
         //Membuka Wave
         if (openWave)
         {
+            if (GameManager.Instance.GetGameOver)
+            {
+                openWave = false;
+                return;
+            }
+
             OnCountdownWave(timer);
 
             if (timer > 10)
