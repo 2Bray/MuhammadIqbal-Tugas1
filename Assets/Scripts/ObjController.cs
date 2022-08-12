@@ -4,18 +4,15 @@ using UnityEngine;
 
 public abstract class ObjController : MonoBehaviour, IRayCast
 {
-    private bool gameOver = false;
     private int lvl = 0;
 
     private void OnEnable()
     {
-        GameManager.OnGameOver += OnGameOver;
         GameManager.OnLvlIncrease += OnLvlIncrease;
     }
 
     private void OnDisable()
     {
-        GameManager.OnGameOver -= OnGameOver;
         GameManager.OnLvlIncrease -= OnLvlIncrease;
     }
 
@@ -39,12 +36,11 @@ public abstract class ObjController : MonoBehaviour, IRayCast
         if (transform.position.y < -6) FinishToSafeArea();
     }
 
-    private void OnGameOver() => gameOver = true;
     private void OnLvlIncrease(int value) => lvl = value;
 
     private void FinishToSafeArea()
     {
-        if (gameOver) return;
+        if (GameManager.Instance.GetGameOver) return;
 
         if (CompareTag("Enemy")) GetComponent<EnemyController>().FinishAndAttack();
 
@@ -53,7 +49,7 @@ public abstract class ObjController : MonoBehaviour, IRayCast
 
     public void ObjGotClick()
     {
-        if (gameOver) return;
+        if (GameManager.Instance.GetGameOver) return;
 
         Death();
         deAktive();

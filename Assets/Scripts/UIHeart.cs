@@ -24,7 +24,7 @@ public class UIHeart : MonoBehaviour
         GameManager.OnGameOver -= SetFalseHeart;
     }
 
-    public void UpdateHeart(int value)
+    private void UpdateHeart(int value)
     {
         SetFalseHeart();
 
@@ -34,7 +34,7 @@ public class UIHeart : MonoBehaviour
         }
     }
 
-    public void SetFalseHeart()
+    private void SetFalseHeart()
     {
         for (int i = 0; i < transform.childCount; i++)
         {

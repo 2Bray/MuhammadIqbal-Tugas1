@@ -22,7 +22,7 @@ public class UIScore : MonoBehaviour
         GameManager.OnScoreUpdate -= UpdateScore;
     }
 
-    public void UpdateScore(int value)
+    private void UpdateScore(int value)
     {
         myText.text = "Score : " + value;
     }

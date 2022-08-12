@@ -27,12 +27,12 @@ public class UICountdown : MonoBehaviour
     }
 
     //Tampilan CountDown Pada Awal Wave
-    public void StartCountDown(float value)
+    private void StartCountDown(float value)
     {
         value = 11 - value;
         myChild.gameObject.SetActive(value < 4);
         myText.text = Mathf.FloorToInt(value).ToString();
     }
 
-    public void EndCountDown() => myChild.gameObject.SetActive(false);
+    private void EndCountDown() => myChild.gameObject.SetActive(false);
 }

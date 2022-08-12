@@ -13,6 +13,10 @@ public class GameManager : MonoBehaviour
     public static event GameDelegate OnGameStart;
     public static event GameDelegate OnGameOver;
 
+    public static GameManager Instance;
+
+    private bool gameOver;
+    public bool GetGameOver { get { return gameOver; } }
     private int heart;
     private int score;
     private int lvl;
@@ -35,25 +39,31 @@ public class GameManager : MonoBehaviour
         WaveTimer.OnWaveOpen -= OnWaveOpen;
     }
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
         heart = 3;
         score = 0;
         lvl = 0;
+        gameOver = false;
 
         OnGameStart();
     }
 
-    public void OnWaveOpen()
+    private void OnWaveOpen()
     {
         lvl++;
         OnLvlIncrease(lvl);
     }
 
     private void OnEnemyHit() => AddScore();
-    public void OnEnemyFinish() => SetHeart(-1);
-    public void OnBlueHit() => GameOver();
-    public void OnBuffHit() => SetHeart(1);
+    private void OnEnemyFinish() => SetHeart(-1);
+    private void OnBlueHit() => GameOver();
+    private void OnBuffHit() => SetHeart(1);
 
     //Di eksekusi jika heart bertambah atau berkurang 1
     private void SetHeart(int value)
@@ -66,14 +76,15 @@ public class GameManager : MonoBehaviour
         OnHeartUpdate(heart);
     }
 
-    public void AddScore()
+    private void AddScore()
     {
         score += 10;
         OnScoreUpdate(score);
     }
 
-    public void GameOver()
+    private void GameOver()
     {
+        gameOver = true;
         OnGameOver();
     }
 }

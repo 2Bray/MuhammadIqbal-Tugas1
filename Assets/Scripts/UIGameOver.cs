@@ -22,7 +22,7 @@ public class UIGameOver : MonoBehaviour
         GameManager.OnGameOver -= SetGameOverPanel;
     }
 
-    public void SetGameOverPanel()
+    private void SetGameOverPanel()
     {
         myChild.SetActive(true);
     }
